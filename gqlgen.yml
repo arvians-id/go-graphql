@@ -1,0 +1,39 @@
+schema:
+  - controller/graph/*.graphqls
+  - controller/graph/schema/*.gql
+
+exec:
+  filename: controller/graph/generated/generated.go
+  package: generated
+
+model:
+  filename: controller/graph/model/models_gen.go
+  package: model
+
+resolver:
+  filename: controller/graph/resolver/resolver.go
+  type: Resolver
+
+autobind:
+#  - "github.com/arvians-id/go-graphql/controller/graph/model"
+
+models:
+  ID:
+    model:
+      - github.com/99designs/gqlgen/graphql.ID
+      - github.com/99designs/gqlgen/graphql.Int
+      - github.com/99designs/gqlgen/graphql.Int64
+      - github.com/99designs/gqlgen/graphql.Int32
+  Int:
+    model:
+      - github.com/99designs/gqlgen/graphql.Int
+      - github.com/99designs/gqlgen/graphql.Int64
+      - github.com/99designs/gqlgen/graphql.Int32
+  User:
+    fields:
+      posts:
+        resolver: true
+  Post:
+    fields:
+      user:
+        resolver: true
