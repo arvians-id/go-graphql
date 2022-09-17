@@ -7,6 +7,7 @@ import (
 	"github.com/arvians-id/go-graphql/config"
 	"github.com/arvians-id/go-graphql/controller/graph/generated"
 	"github.com/arvians-id/go-graphql/controller/graph/resolver"
+	"github.com/arvians-id/go-graphql/controller/middleware"
 	"github.com/arvians-id/go-graphql/repository"
 	"github.com/arvians-id/go-graphql/service"
 	"github.com/gin-gonic/gin"
@@ -53,6 +54,8 @@ func playgroundHandler() gin.HandlerFunc {
 func main() {
 	// Setting up Gin
 	r := gin.Default()
+
+	r.Use(middleware.GinContextToContextMiddleware())
 	r.POST("/query", graphqlHandler())
 	r.GET("/", playgroundHandler())
 	err := r.Run()
