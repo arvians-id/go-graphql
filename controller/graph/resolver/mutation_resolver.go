@@ -35,7 +35,7 @@ func (r *mutationResolver) CreatePost(ctx context.Context, input model.NewPost) 
 
 	post := &model.Post{
 		Title: input.Title,
-		Body:  input.Body,
+		Body:  &input.Body,
 		User:  user,
 	}
 

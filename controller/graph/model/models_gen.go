@@ -13,10 +13,10 @@ type NewUser struct {
 }
 
 type Post struct {
-	ID    string `json:"id"`
-	Title string `json:"title"`
-	Body  string `json:"body"`
-	User  *User  `json:"user"`
+	ID    string  `json:"id"`
+	Title string  `json:"title"`
+	Body  *string `json:"body"`
+	User  *User   `json:"user"`
 }
 
 type User struct {
