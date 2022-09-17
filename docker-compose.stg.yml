@@ -1,0 +1,36 @@
+version: "3"
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: apriori
+    ports:
+      - "5432:5432"
+    expose:
+      - "5432"
+    volumes:
+      - ./database/migration/postgres/database:/var/lib/postgresql/data
+    networks:
+      - go_graphql
+    restart: always
+  cache:
+    image: redis:6
+    ports:
+      - "6379:6379"
+    networks:
+      - go_graphql
+  migrate:
+    image: migrate/migrate
+    volumes:
+      - ./database/migration/postgres:/migrations
+    command: ["-path", "/migrations", "-database", "postgres://root:root@go-graphql-db-1:5432/go_graphql?sslmode=disable", "-verbose", "up"]
+    depends_on:
+      - db
+    networks:
+      - go_graphql
+
+networks:
+  go_graphql:
+    driver: bridge
